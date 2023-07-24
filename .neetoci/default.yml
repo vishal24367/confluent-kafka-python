@@ -1,11 +1,11 @@
 version: v1.0
 name: neetoCi
 envs:
-  - name: LIBRDKAFKA_VERSION
+  - key: LIBRDKAFKA_VERSION
     value: v2.2.0
-  - name: OS_NAME
+  - key: OS_NAME
     value: linux
-  - name: ARCH
+  - key: ARCH
     value: x64
 global_job_config:
   setup:
