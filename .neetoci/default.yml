@@ -1,5 +1,6 @@
 version: v1.0
 name: neetoCi
+fail_fast: false
 envs:
   - key: LIBRDKAFKA_VERSION
     value: v2.2.0
@@ -14,6 +15,7 @@ global_job_config:
   jobs:
     - name: Build
       commands:
+        - python3 -m pip install cibuildwheel
         - ./tools/wheels/build-wheels.sh "${LIBRDKAFKA_VERSION#v}" wheelhouse
         - tar -czf wheelhouse-linux-${ARCH}.tgz wheelhouse
         - artifact push workflow wheelhouse-linux-${ARCH}.tgz --destination artifacts/wheels-${OS_NAME}-${ARCH}.tgz/
@@ -29,4 +31,4 @@ global_job_config:
         - sha256sum confluent-kafka-python-wheels-${SEMAPHORE_GIT_TAG_NAME}-${SEMAPHORE_WORKFLOW_ID}.tgz
         - cd ..
         - artifact push project artifacts/confluent-kafka-python-wheels-${SEMAPHORE_GIT_TAG_NAME}-${SEMAPHORE_WORKFLOW_ID}.tgz --destination confluent-kafka-python-wheels-${SEMAPHORE_GIT_TAG_NAME}-${SEMAPHORE_WORKFLOW_ID}.tgz
-        - echo Thank you
+        - echo Thank you for using neetoCi
